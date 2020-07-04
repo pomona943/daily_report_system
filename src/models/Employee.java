@@ -23,15 +23,22 @@ import javax.persistence.Table;
             query = "SELECT COUNT(e) FROM Employee AS e"
             ),
 
+    // 社員番号の重複を確認するクエリ。
     @NamedQuery(
             name = "checkRegisteredCode",
             query = "SELECT COUNT(e) FROM Employee AS e WHERE e.code = :code"
             ),
+
+    // ログイン時に社員番号とパスワードが正しいかを確認するクエリ。
     @NamedQuery(
             name = "checkLoginCodeAndPassword",
             query = "SELECT e FROM Employee AS e WHERE e.delete_flag = 0 AND e.code = :code AND e.password = :pass"
             )
 })
+
+/** Entity: DBに保管するオブジェクトのこと。
+ * Javaのクラスに@Entityと記述すると、Entityを表すクラスを作成できる。
+ */
 @Entity
 public class Employee {
     @Id
@@ -40,6 +47,7 @@ public class Employee {
     private Integer id;
 
     @Column(name = "code", nullable = false, unique = true)
+    // unique = trueで、既に存在しているcode(社員番号)は入力できないように設定。
     private String code;
 
     @Column(name = "name", nullable = false)

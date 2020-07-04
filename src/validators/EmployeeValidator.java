@@ -15,6 +15,7 @@ public class EmployeeValidator {
         String code_error = _validateCode(e.getCode(), code_duplicate_check_flag);
         if(!code_error.equals("")) {
             errors.add(code_error);
+            // code_errorがnullじゃない場合(エラーがある場合)、下部の_validateCodeメソッドで返されたエラーメッセージをリストに追加。
         }
 
         String name_error = _validateName(e.getName());
@@ -36,9 +37,13 @@ public class EmployeeValidator {
         // 必須入力チェック
         if(code == null || code.equals("")) {
             return "社員番号を入力してください。";
+
         }
 
         // すでに登録されている社員番号との重複チェック
+        /** Boolean code_duplicate_check_flag がtrueであれば、パスワードの入力値チェックと
+         * 社員番号の重複チェックを行う。
+         */
         if(code_duplicate_check_flag) {
             EntityManager em = DBUtil.createEntityManager();
             long employees_count = (long)em.createNamedQuery("checkRegisteredCode", Long.class)

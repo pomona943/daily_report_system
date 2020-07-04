@@ -32,8 +32,13 @@ public class EmployeesEditServlet extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // EntityManagerのオブジェクトを生成
         EntityManager em = DBUtil.createEntityManager();
 
+        /** emオブジェクトを使って、EmployeeクラスからIDを指定してデータを取り出す。
+         * em.find()メソッドの引数は、em.find(クラス名.class, データ番号(ここではID))となる(Lesson9.6.4参照)
+         * IDはrequest.getParameterメソッドで取得(元がInteger型なのでInteger型にキャストする。)
+         */
         Employee e = em.find(Employee.class, Integer.parseInt(request.getParameter("id")));
 
         em.close();
@@ -42,7 +47,7 @@ public class EmployeesEditServlet extends HttpServlet {
         request.setAttribute("_token", request.getSession().getId());
         request.getSession().setAttribute("employee_id", e.getId());
 
-        RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/views/employees/edit.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/employees/edit.jsp");
         rd.forward(request, response);
 
     }
