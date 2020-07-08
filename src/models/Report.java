@@ -36,6 +36,7 @@ public class Report {
     @ManyToOne
     @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
+    // employeeプロパティ=日報の作成者情報。ログイン中の従業員の情報をemployeeプロパティに格納。
 
     @Column(name = "report_date", nullable = false)
     private Date report_date;
@@ -44,6 +45,7 @@ public class Report {
     private String title;
 
     @Lob
+    // @Lobアノテーションで、文章の改行もDBに保存される。
     @Column(name = "content", nullable = false)
     private String content;
 
