@@ -35,12 +35,15 @@ public class ReportsIndexServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityManager em = DBUtil.createEntityManager();
 
+        // 開くページ数を設定（デフォルトは１ページ目）
         int page;
         try{
-            page = Integer.parseInt(request.getParameter("page"));
-        } catch(Exception e) {
-            page = 1;
+            page = Integer.parseInt(request.getParameter("page")); // 例外が発生する可能性のある処理
+        } catch(Exception e) { // catch(例外の型 引数)
+            page = 1; //例外が発生した場合の処理（例外が発生しなければ実行されない）
         }
+
+        // 最大件数と開始位置を指定してメッセージを取得
         List<Report> reports = em.createNamedQuery("getAllReports", Report.class)
                                   .setFirstResult(15 * (page - 1))
                                   .setMaxResults(15)
@@ -52,8 +55,8 @@ public class ReportsIndexServlet extends HttpServlet {
         em.close();
 
         request.setAttribute("reports", reports);
-        request.setAttribute("reports_count", reports_count);
-        request.setAttribute("page", page);
+        request.setAttribute("reports_count", reports_count); // 全件数をリクエストスコープへ
+        request.setAttribute("page", page); // ページ数をリクエストスコープへ
         if(request.getSession().getAttribute("flush") != null) {
             request.setAttribute("flush", request.getSession().getAttribute("flush"));
             request.getSession().removeAttribute("flush");

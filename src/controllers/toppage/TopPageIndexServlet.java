@@ -44,14 +44,25 @@ public class TopPageIndexServlet extends HttpServlet {
         } catch(Exception e) {
             page = 1;
         }
+
+        // 最大件数と開始位置を指定してメッセージを取得
         List<Report> reports = em.createNamedQuery("getMyAllReports", Report.class)
                                   .setParameter("employee", login_employee)
+
+                                  /** 「何件目からデータを取得するか？」
+                                   * 配列と同じで、1件目のインデックス番号は0なので、1ページ目には0番目(1件目)のデータから取得。
+                                   * 2ページ目には15番目(16件目のデータ)から取得される。
+                                   */
                                   .setFirstResult(15 * (page - 1))
+
+                                  // データの最大取得件数
                                   .setMaxResults(15)
                                   .getResultList();
 
         long reports_count = (long)em.createNamedQuery("getMyReportsCount", Long.class)
                                       .setParameter("employee", login_employee)
+
+                                      // getMyReportsCountは、全件数という1つの結果だけ帰ってくるので、getSingleResult();としている。
                                       .getSingleResult();
 
         em.close();
