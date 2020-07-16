@@ -5,7 +5,7 @@
         <c:if test="${hasError}">
             <div id="flush_error">
                 社員番号かパスワードが間違っています。
-                <!-- LoginサーブレットのhasErrorという変数が、リクエストスコープにtrueでセットされていれば表示 -->>
+                <!-- LoginサーブレットのhasErrorという変数が、リクエストスコープにtrueでセットされていれば表示 -->
             </div>
         </c:if>
         <c:if test="${flush != null}">
@@ -19,7 +19,7 @@
         <input type="text" name="code" value="${code}" />
         <br /><br />
 
-        <label for="password">パスワード</label>
+        <label for="password">パスワード</label><br />
         <input type="password" name="password" />
         <br /><br />
 

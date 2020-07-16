@@ -9,6 +9,20 @@
         </div>
     </c:if>
     <h2>日報　一覧</h2>
+    <div class="report_search">
+        <h4>
+        日報を<br />
+        </h4>
+        <form method="POST" action="<c url value='/reports/search'>">
+            <select name="keyword_type">
+                <option value="name">投稿者氏名</option>
+                <option value="title">タイトル</option>
+            </select>
+            <h4>で検索</h4>
+            <input type="text" name="keyword" value=${report.keyword} />
+        </form>
+    </div>
+    <br />
     <table id="report_list">
         <tbody>
             <tr>

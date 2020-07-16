@@ -46,7 +46,8 @@ public class LoginFilter implements Filter {
             // これが無ければ「rest.css」や「style.css」の読み込みにもログインチェックが入ってしまう。
             HttpSession session = ((HttpServletRequest)request).getSession();
 
-            // セッションスコープに保存された従業員情報(ログインユーザ情報)を取得し、変数eに格納。
+            // loginサーブレットでセッションスコープに保存された従業員情報(ログインユーザ情報)を取得し、変数eに格納。
+            // ログアウト状態の時、eはnullになる。
             Employee e = (Employee)session.getAttribute("login_employee");
 
             if(!servlet_path.equals("/login")) { // ログイン画面以外について
@@ -58,7 +59,7 @@ public class LoginFilter implements Filter {
 
                 // 従業員管理の機能は管理者のみが閲覧できるようにする。
                 // 一般従業員(admin_flagが0)が従業員管理のページ(/employees)にアクセスしようとした場合、トップページへリダイレクト。
-                if(servlet_path.matches("/employees/*") && e.getAdmin_flag() == 0) {
+                if(servlet_path.matches("/employees.*") && e.getAdmin_flag() == 0) {
                     ((HttpServletResponse)response).sendRedirect(context_path + "/");
                     return;
                 }

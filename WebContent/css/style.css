@@ -48,7 +48,7 @@ table, tr, th, td {
 }
 
 table {
-    width: 100%
+    width: 100%;
     table-layout: fixed;
 }
 
@@ -163,4 +163,12 @@ pre {
 
 h3 {
     font-size: larger;
+}
+
+h4 {
+    font-size: 18px;
+}
+
+#report_search {
+    display: inline;
 }
